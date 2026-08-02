@@ -1,18 +1,15 @@
-class Livre:
+from sqlalchemy import Boolean, Column, Integer, String
 
-    def __init__(self, id, titre, auteur):
-        self.id = id
-        self.titre = titre
-        self.auteur = auteur
-        self.disponible = True
+from app.database import Base
 
-    def emprunter(self):
-        if self.disponible:
-            self.disponible = False
-            print(f"Le livre '{self.titre}' a été emprunté.")
-        else:
-            print("Ce livre est déjà emprunté.")
 
-    def retourner(self):
-        self.disponible = True
-        print(f"Le livre '{self.titre}' a été retourné.")
+class Livre(Base):
+    __tablename__ = "livre"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    titre = Column(String(150), nullable=False)
+
+    auteur = Column(String(100), nullable=False)
+
+    disponible = Column(Boolean, default=True)

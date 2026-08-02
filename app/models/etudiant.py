@@ -1,6 +1,13 @@
-class Etudiant:
+from sqlalchemy import Column, Integer, String
 
-    def __init__(self, id, nom, email):
-        self.id = id
-        self.nom = nom
-        self.email = email
+from app.database import Base
+
+
+class Etudiant(Base):
+    __tablename__ = "etudiant"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    nom = Column(String(100), nullable=False)
+
+    email = Column(String(150), unique=True, nullable=False)
