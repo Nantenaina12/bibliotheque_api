@@ -1,39 +1,16 @@
-from models.livre import Livre
-from models.etudiant import Etudiant
-from models.emprunt import Emprunt
+from fastapi import FastAPI
 
-livre1 = Livre(
-    1,
-    "Python pour les SIG",
-    "Mark Lutz"
-)
+from app.database import Base, engine
 
-etudiant1 = Etudiant(
-    1,
-    "Orlando",
-    "orlando@gmail.com"
-)
+from app.models.livre import Livre
+from app.models.etudiant import Etudiant
+from app.models.emprunt import Emprunt
 
-emprunt1 = Emprunt(
-    1,
-    etudiant1,
-    livre1
-)
+Base.metadata.create_all(bind=engine)
 
-print("===== LIVRE =====")
-print(livre1.titre)
-print(livre1.auteur)
-print(livre1.disponible)
+app = FastAPI()
 
-print()
 
-print("===== ETUDIANT =====")
-print(etudiant1.nom)
-print(etudiant1.email)
-
-print()
-
-print("===== EMPRUNT =====")
-print(emprunt1.etudiant.nom)
-print(emprunt1.livre.titre)
-print(emprunt1.date_emprunt)
+@app.get("/")
+def root():
+    return {"message": "Bienvenue dans l'API Bibliothèque"}

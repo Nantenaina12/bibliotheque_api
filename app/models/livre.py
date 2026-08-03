@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String
 
 from app.database import Base
+from sqlalchemy.orm import relationship
 
 
 class Livre(Base):
@@ -13,3 +14,8 @@ class Livre(Base):
     auteur = Column(String(100), nullable=False)
 
     disponible = Column(Boolean, default=True)
+
+emprunts = relationship(
+    "Emprunt",
+    back_populates="livre"
+)
